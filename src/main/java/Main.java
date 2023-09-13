@@ -1,3 +1,5 @@
+
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Date;
@@ -6,6 +8,9 @@ import java.util.Date;
 public class Main {
 
     static ArrayList<Article> articles = new ArrayList<>();
+
+    static ArrayList<Comment> comments = new ArrayList<>();
+
     public static void main(String[] args) {
 
         // 이름 짓는 규칙
@@ -24,9 +29,6 @@ public class Main {
         Scanner scan = new Scanner(System.in);
 
 
-
-
-
         int lastArticleId = 1;
 
         Article article1 = new Article(lastArticleId, "안녕하세요 반갑습니다. 자바 공부중이예요", "");
@@ -40,6 +42,10 @@ public class Main {
         Article article3 = new Article(lastArticleId, "정처기 따야되나요?", "");
         articles.add(article3);
         lastArticleId++;
+
+
+
+
 
 
         while (true) {
@@ -75,11 +81,12 @@ public class Main {
                     System.out.printf("제목 : %s\n", article.getTitle());
                     System.out.printf("내용 : %s\n", article.getContent());
                     System.out.println("=============");
+
                 }
 
             } else if (command.equals("update")) {
                 System.out.println("수정할 게시물 번호 : ");
-                int target = scan.nextInt();
+                int target = Integer.parseInt(scan.nextLine());
                 scan.nextLine();
 
                 System.out.println("제목 : ");
@@ -98,7 +105,7 @@ public class Main {
 
             } else if (command.equals("delete")) {
                 System.out.println("삭제할 게시물 번호 : ");
-                int target = scan.nextInt();
+                int target = Integer.parseInt(scan.nextLine());
 
                 scan.nextLine();
 
@@ -116,51 +123,108 @@ public class Main {
                 System.out.println("상세보기 할 게시물 번호 : ");
 
 
-                int targetId = scan.nextInt();
+                int targetId = Integer.parseInt(scan.nextLine());
                 Article article = findById(targetId);
 
                 Date now = new Date();
                 String nowTime = now.toString();
+                article.increaseCount();
 
-                if(article == null){
+
+
+                if (article == null) {
                     System.out.println("존재하지 않는 게시물입니다.");
-                }else{
+                } else {
 
-                System.out.println("=============");
-                System.out.printf("번호 : %d\n", article.getId());
-                System.out.printf("제목 : %s\n", article.getTitle());
-                System.out.printf("내용 : %s\n", article.getContent());
-                System.out.println(nowTime);
 
-            }
+                    System.out.println("=============");
+                    System.out.printf("======" + "%d번 게시물\n"+ "===", article.getId());
+                    System.out.printf("번호 : %d\n", article.getId());
+                    System.out.printf("제목 : %s\n", article.getTitle());
+                    System.out.printf("내용 : %s\n", article.getContent());
+                    System.out.println(nowTime);
+                    System.out.println("조회수 : " + article.getCount());
+                    System.out.println("===============");
+                    System.out.println("====== 댓글 ======");
+                    for(int i = 0; i < comments.size(); i++) {
+                        Comment comment = comments.get(i);
+                        System.out.printf("댓글 내용 : %s\n" , comment.getReply());
+                    }
+                    System.out.println("상세보기 기능을 선택해주세요");
+                    System.out.printf("0.댓글 등록 ");
+                    System.out.printf("1.추천 ");
+                    System.out.printf("2.수정 ");
+                    System.out.printf("3.삭제 ");
+                    System.out.printf("4.목록으로 : ");
+
+                    int choice = Integer.parseInt(scan.nextLine());
+
+                    if(choice == 0) {
+
+                        System.out.println("댓글 등록 : ");
+                        String reply = scan.nextLine();
+                        Comment comment = new Comment(reply);
+                        System.out.println(comment.getReply());
+                        comments.add(comment);
+                        System.out.println("게시물이 등록되었습니다.");
+                    } else if(choice == 1){
+                        System.out.println("[추천 기능] ");
+                    } else if(choice == 2){
+                        System.out.println("[수정 기능]");
+                    } else if (choice == 3) {
+                        System.out.println("[삭제 기능]");
+                    } else{
+                        System.out.println("목록으로");
+                    }
+
+
+
+                }
+
 
             } else if (command.equals("search")) {
+                Date now = new Date();
+                String nowTime = now.toString();
+
+
                 System.out.println("검색 키워드를 입력해주세요 : ");
                 String target = scan.nextLine();
-                if (target.contains("자바")) {
-                    System.out.println(arti);
+
+                System.out.println("==================");
+                for (int i = 0; i < articles.size(); i++) {
+                    Article article = articles.get(i);
+                    String title = article.getTitle();
+
+                    if (title.contains(target)) {
+                        System.out.printf("번호 : %d\n", article.getId());
+                        System.out.printf("제목 : %s\n", article.getTitle());
+                        System.out.println(nowTime);
+                        System.out.println("==================");
+                    }
                 }
-            }
 
 
             }
+
 
         }
-    public static Article findById(int id){
+
+
+    }
+
+    public static Article findById(int id) {
 
         Article target = null;
-        for(int i = 0; i < articles.size(); i++){
+        for (int i = 0; i < articles.size(); i++) {
             Article article = articles.get(i);
-            if(id == article.getId()){
+            if (id == article.getId()) {
                 target = article;
             }
 
         }
         return target;
     }
-
-
-    }
+}
 
 
 

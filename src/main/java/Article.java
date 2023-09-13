@@ -1,3 +1,5 @@
+import javax.xml.stream.events.Comment;
+
 public class Article {
 
 
@@ -12,6 +14,10 @@ public class Article {
     // 내용
     private String content;
 
+    private int count;
+
+
+
 
 
 
@@ -24,7 +30,19 @@ public class Article {
 
     }
 
+    public void increaseCount() {
+        count++;
+    }
 
+
+    public int getCount() {
+
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 
     public void setTitle(String title){
         this.title = title;
