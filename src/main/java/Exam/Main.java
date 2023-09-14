@@ -11,6 +11,8 @@ public class Main {
 
     static ArrayList<Comment> comments = new ArrayList<>();
 
+    static ArrayList<Member> members = new ArrayList<>();
+
     public static void main(String[] args) {
 
         // 이름 짓는 규칙
@@ -42,10 +44,6 @@ public class Main {
         Article article3 = new Article(lastArticleId, "정처기 따야되나요?", "");
         articles.add(article3);
         lastArticleId++;
-
-
-
-
 
 
         while (true) {
@@ -131,14 +129,13 @@ public class Main {
                 article.increaseCount();
 
 
-
                 if (article == null) {
                     System.out.println("존재하지 않는 게시물입니다.");
                 } else {
 
 
                     System.out.println("=============");
-                    System.out.printf("======" + "%d번 게시물\n"+ "===", article.getId());
+                    System.out.printf("======" + "%d번 게시물\n" + "===", article.getId());
                     System.out.printf("번호 : %d\n", article.getId());
                     System.out.printf("제목 : %s\n", article.getTitle());
                     System.out.printf("내용 : %s\n", article.getContent());
@@ -146,9 +143,9 @@ public class Main {
                     System.out.println("조회수 : " + article.getCount());
                     System.out.println("===============");
                     System.out.println("====== 댓글 ======");
-                    for(int i = 0; i < comments.size(); i++) {
+                    for (int i = 0; i < comments.size(); i++) {
                         Comment comment = comments.get(i);
-                        System.out.printf("댓글 내용 : %s\n" , comment.getReply());
+                        System.out.printf("댓글 내용 : %s\n", comment.getReply());
                     }
                     System.out.println("상세보기 기능을 선택해주세요");
                     System.out.printf("0.댓글 등록 ");
@@ -159,7 +156,7 @@ public class Main {
 
                     int choice = Integer.parseInt(scan.nextLine());
 
-                    if(choice == 0) {
+                    if (choice == 0) {
 
                         System.out.println("댓글 등록 : ");
                         String reply = scan.nextLine();
@@ -167,16 +164,15 @@ public class Main {
                         System.out.println(comment.getReply());
                         comments.add(comment);
                         System.out.println("게시물이 등록되었습니다.");
-                    } else if(choice == 1){
+                    } else if (choice == 1) {
                         System.out.println("[추천 기능] ");
-                    } else if(choice == 2){
+                    } else if (choice == 2) {
                         System.out.println("[수정 기능]");
                     } else if (choice == 3) {
                         System.out.println("[삭제 기능]");
-                    } else{
-                        System.out.println("목록으로");
+                    } else {
+                        System.out.println("상세보기 화면을 빠져나갑니다.");
                     }
-
 
 
                 }
@@ -204,29 +200,60 @@ public class Main {
                 }
 
 
+            } else if (command.equals("signup")) {
+                System.out.println("=== 회원가입을 진행합니다 ===");
+
+                System.out.println("아이디를 입력해주세요 : ");
+                String inputId = scan.nextLine();
+
+                System.out.println("비밀번호를 입력해주세요 : ");
+                String inputPassword = scan.nextLine();
+
+                System.out.println("닉네임을 입력해주세요 : ");
+                String inputNickname = scan.nextLine();
+
+                System.out.println("=== 회원가입이 완료되었습니다. ===");
+
+                Member member = new Member(inputId, inputPassword, inputNickname);
+                members.add(member);
+            } else if (command.equals("login")) {
+                System.out.println("아이디를 입력해 주세요 : ");
+                String inputId = scan.nextLine();
+
+                System.out.println("비밀번호를 입력해주세요 : ");
+                String inputPassword = scan.nextLine();
+
+                boolean loggedIn = false;
+                for (int i = 0; i < members.size(); i++) {
+                    Member member = members.get(i);
+                    if (member.getMemberId().equals(inputId) && member.getMemberPassword().equals(inputPassword)) {
+                        loggedIn = true;
+                        System.out.println("로그인 성공");
+
+                    } else {
+                        System.out.println("로그인 실패");
+                    }
+
+
+                }
+
             }
 
-
         }
-
-
     }
 
     public static Article findById(int id) {
 
         Article target = null;
+
         for (int i = 0; i < articles.size(); i++) {
             Article article = articles.get(i);
             if (id == article.getId()) {
                 target = article;
             }
-
         }
+
         return target;
+
     }
 }
-
-
-
-
-
