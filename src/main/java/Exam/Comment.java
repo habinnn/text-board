@@ -1,3 +1,5 @@
+package Exam;
+
 public class Comment {
     private String reply;
 

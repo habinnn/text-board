@@ -1,3 +1,5 @@
+package Exam;
+
 import javax.xml.stream.events.Comment;
 
 public class Article {

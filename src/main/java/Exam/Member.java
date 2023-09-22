@@ -1,3 +1,5 @@
+package Exam;
+
 public class Member {
 
     private String memberId ;

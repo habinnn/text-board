@@ -2,11 +2,16 @@ package test2;
 
 public class FirstArticle {
 
+    private int count;
+
     private String title;
+
     private String content;
 
 
-    public  FirstArticle(String title, String content){
+
+    public FirstArticle(int count,String title, String content){
+        this.count = count;
         this.title = title;
         this.content = content;
 
@@ -27,4 +32,13 @@ public class FirstArticle {
     public void setContent(String content) {
         this.content = content;
     }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 }
+

@@ -1,4 +1,4 @@
-
+package Exam;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -85,7 +85,7 @@ public class Main {
             } else if (command.equals("update")) {
                 System.out.println("수정할 게시물 번호 : ");
                 int target = Integer.parseInt(scan.nextLine());
-                scan.nextLine();
+
 
                 System.out.println("제목 : ");
                 String newTitle = scan.nextLine();
